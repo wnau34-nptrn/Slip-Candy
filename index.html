@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#fff5f9">
+<meta name="theme-color" content="#fffafd">
 <meta name="description" content="ตกแต่งสลิปด้วยอิโมจิ ปิดข้อมูลส่วนตัว ปรับโทนสี และบันทึกเป็นรูปภาพ — ทำงานบนเครื่องของคุณ">
-<title>Slip Candy 🎀 — สติกเกอร์ Text Box และ Layout 5 แบบ</title>
+<title>Slip Candy V4 🎀 — Editor เต็มจอ</title>
 <style>
 :root{--pink:#ed4f92;--pink-soft:#fff0f6;--ink:#333149;--muted:#79768b;--line:#eae4ee;--bg:#fff9fc;--purple:#8c6ec7;--shadow:0 12px 42px rgba(83,51,81,.09);--r:20px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 5% -20%,#ffe1ed 0%,transparent 38%),radial-gradient(ellipse at 105% 30%,#ebe1ff 0%,transparent 36%),#fffafd;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;line-height:1.5;-webkit-tap-highlight-color:transparent}
@@ -44,12 +44,80 @@ main{max-width:1280px;margin:0 auto;padding:8px 24px 50px}.workspace{display:gri
 .layout-slots{display:grid;grid-template-columns:1fr;gap:10px}.layout-card{background:linear-gradient(120deg,#fff9fd,#f9f7ff);border:1px solid #f1dfec;border-radius:15px;padding:12px}.layout-card.saved{border-color:#ebbad8}.layout-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.layout-card-index{font-size:12px;font-weight:800;color:#aa4582}.layout-card-state{font-size:11px;color:#a79aac}.layout-card.saved .layout-card-state{color:#568d77}.layout-name{width:100%;margin:9px 0 5px;border:1px solid #f0dbe6!important;background:white!important;border-radius:9px;padding:9px 10px;font-weight:700}.layout-info{font-size:11px;color:#81778e;min-height:17px;margin:4px 0 10px}.layout-actions{display:grid;grid-template-columns:1fr 1fr auto;gap:7px}.layout-actions button{padding:9px 7px;font-size:12px;border-radius:9px;font-weight:750}.layout-actions button:disabled{opacity:.35}
 .layout-thumb{height:45px;border-radius:9px;background:repeating-linear-gradient(90deg,#fff 0 9px,#fdf2f8 9px 18px);border:1px solid #f4e1ec;overflow:hidden;margin:6px 0;position:relative}.layout-thumb .titem{position:absolute;width:10px;height:10px;background:#efa4ce;border-radius:4px;transform:translate(-50%,-50%);font-size:12px;line-height:10px;text-align:center}.layout-thumb .titem.mask{background:#efa7ca;width:19px;height:7px;border-radius:1px}.layout-thumb .titem.textbox{background:#fff5ff;border:1px solid #d197d0;width:28px;height:10px}
 @media(max-width:390px){.tab{font-size:11px}} 
+
+/* ===== Slip Candy V4: single-screen responsive studio ===== */
+:root{--accent:#e84d93;--pink:#e84d93;--bg:#fef7fb;--ink:#392e45;--muted:#887d93;--line:#eee5ef;--shadow:0 12px 36px rgba(89,48,93,.085)}
+html,body{height:100%;width:100%;overflow:hidden!important;overscroll-behavior:none}
+body{height:100vh;height:100dvh;display:flex;flex-direction:column;background:radial-gradient(circle at 10% 2%,#ffe8f3,transparent 35%),radial-gradient(circle at 100% 75%,#f0eaff,transparent 35%),#fbf8fd;line-height:1.4}
+.topbar{flex:none;margin:0 auto;width:100%;max-width:1540px;min-height:70px;padding:11px 20px 10px;gap:12px}
+.brand{gap:10px}.brand-icon{width:42px;height:42px;border-radius:15px;font-size:24px;box-shadow:0 6px 15px #f082b652}.brand h1{font-size:22px;line-height:1.05;letter-spacing:-.8px}.brand h1 small{font-size:15px}.brand p{margin-top:3px;font-size:11px}
+.header-actions{display:flex;align-items:center;gap:8px;margin-left:auto}.header-upload{padding:9px 15px;border-radius:12px;background:#eb5297;color:white;font-weight:750;font-size:12px;box-shadow:0 5px 14px #ee84b044}.header-upload:active{transform:scale(.97)}
+.header-mini{width:37px;height:37px;background:white;color:#8f769a;border:1px solid #eee1ec;border-radius:11px;font-size:19px;font-weight:750}
+.privacy-tag{border:0;background:#eef9f5;font-size:11px;padding:6px 10px}
+main{flex:1;min-height:0;overflow:hidden;width:100%;max-width:1540px;padding:0 18px 12px;margin:0 auto}
+.workspace{height:100%;min-height:0;display:grid;grid-template-columns:minmax(316px,366px) minmax(0,1fr);gap:14px;align-items:stretch}
+.editor,.preview-panel{min-height:0;min-width:0;box-shadow:var(--shadow);border:1px solid #f0eaf2;background:#fff;border-radius:22px;overflow:hidden}
+.editor{order:1;padding:0;display:flex;flex-direction:column}
+.preview-panel{order:2;display:flex;flex-direction:column;position:relative;padding:14px 16px 12px}
+.editor>.upload-zone,.editor>.steps,.editor>.footnote{display:none!important}
+.sheet-head{order:1;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 15px;border-bottom:1px solid #f3e9f1;background:linear-gradient(120deg,#fff8fc,#fcf9ff)}
+.sheet-head strong{font-size:13px;font-weight:800;color:#644965}.sheet-head small{font-size:11px;color:#9b879b}.sheet-close{display:none;border-radius:9px;background:#ffeaf3;color:#bb397b;font-weight:800;padding:6px 11px;font-size:14px}
+.tabs{order:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:0;padding:10px;background:linear-gradient(110deg,#fff9fd,#fbf8ff);border-radius:0;border-bottom:1px solid #f1e7f0;flex:none}
+.tab{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;min-width:0;min-height:55px;border-radius:11px;padding:5px 2px;font-size:10px;white-space:normal;line-height:1.2;letter-spacing:-.15px}
+.tab .tab-icon{font-size:20px;line-height:24px}.tab .tab-label{font-weight:750;white-space:nowrap}.tab.active{background:#ffedf5;color:#ba3477;box-shadow:none;border:1px solid #f7c7dc}
+.editor>.panel{order:2;display:none;min-height:0;padding:14px 15px 22px;overflow:auto;overscroll-behavior:contain;scrollbar-color:#efc5d9 transparent;scrollbar-width:thin}
+.editor>.panel.active{display:block;flex:1}
+.panel-title{font-size:15px;margin-bottom:4px;letter-spacing:-.2px}.hint{font-size:11.5px;line-height:1.5;margin:6px 0 10px}.pill-row{flex-wrap:nowrap;overflow:auto;overscroll-behavior-inline:contain;padding:1px 0 8px;margin-bottom:5px;scrollbar-width:none}.pill-row::-webkit-scrollbar{display:none}.pill{white-space:nowrap;padding:7px 11px;font-size:11px}
+.emoji-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}.emoji{border:1px solid #f1e9f2;border-radius:12px;font-size:24px;min-height:42px;aspect-ratio:1;background:#fcf8fd}
+.sticker-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.sticker-card{min-height:75px;border-radius:12px;padding:3px}.sticker-card .sticker-pick{min-height:70px;gap:2px}.sticker-card .sticker-pick img{height:54px;width:62px}.sticker-card .sticker-pick span{font-size:9px}
+.inline-form input{min-width:0}.selection{padding:10px 11px;margin:0 0 8px}.selection.show{display:block}.selection-head span{display:none}
+.editor .panel[data-panel="adjust"] .selection{background:#fffafb;border:0;padding:3px 0}.adjust-empty{background:#fff4fa;border-radius:13px;padding:15px;color:#977b99;font-size:12px;text-align:center}
+.preview-head{flex:none;display:flex;justify-content:space-between;align-items:center;margin:0 0 11px;min-height:39px;gap:7px}.preview-head h2{font-size:14px;margin:0 0 2px}.preview-head p{font-size:11px}.quick-buttons{flex-wrap:nowrap;gap:5px}.small-btn{padding:6px 8px;min-width:35px;height:34px;font-size:18px;border-radius:10px;color:#715d81}
+.canvas-wrap{flex:1;min-height:0;padding:12px;overflow:hidden;border-radius:17px;border:1px solid #ede8f0;background:linear-gradient(45deg,#f7f2f9 25%,transparent 25%),linear-gradient(-45deg,#f7f2f9 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#f7f2f9 75%),linear-gradient(-45deg,transparent 75%,#f7f2f9 75%),#fff;background-size:22px 22px;background-position:0 0,0 11px,11px -11px,-11px 0}
+.canvas-holder{max-width:none;flex:0 0 auto;border-radius:3px;box-shadow:0 9px 28px #2b1e322b;overflow:visible;line-height:0}.canvas-holder.show{display:block}canvas{touch-action:none;width:100%;height:auto;display:block}
+.canvas-instruction{display:none;position:absolute;top:9px;left:50%;transform:translateX(-50%);border:1px solid #efdfed;background:#ffffffef;box-shadow:0 3px 12px #28173312;border-radius:30px;padding:5px 11px;font-size:10px;color:#826e87;white-space:nowrap;pointer-events:none;z-index:3}
+.canvas-wrap:has(.canvas-holder.show) .canvas-instruction{display:block}
+.empty-state{padding:10px 12px;max-width:380px}.empty-art{width:145px;height:168px;margin:0 auto 16px;padding:12px}.empty-art .line{margin:8px auto;height:7px}.empty-art .stamp{font-size:26px;margin:8px auto}.empty-art .sticker{font-size:30px}.empty-state h3{font-size:15px}.empty-state p{font-size:12px;margin:6px 0 13px}
+.action-bar{flex:none;justify-content:center;flex-wrap:nowrap;margin:11px 0 0;gap:8px}.action-bar button{min-width:0;font-size:12px;padding:10px 16px;max-width:260px}.action-bar #share{flex:1}.action-bar #download{flex:.55}.stage-hint,.privacy-footer{display:none!important}
+.message{position:absolute;z-index:15;bottom:63px;left:50%;transform:translateX(-50%) translateY(10px);opacity:0;pointer-events:none;margin:0;min-height:0;max-width:min(92%,430px);background:#3f314de8;color:white!important;border-radius:14px;padding:10px 13px;font-size:11px;line-height:1.45;box-shadow:0 8px 24px #31223b30;transition:opacity .18s,transform .18s}.message.show-message{opacity:1;transform:translateX(-50%) translateY(0)}.message.error{background:#ac4965ea}
+.floating-toolbar{display:none;position:absolute;left:50%;bottom:72px;transform:translateX(-50%);z-index:10;align-items:center;gap:5px;padding:5px;border-radius:14px;border:1px solid #f3d7e6;background:#fffdfef5;box-shadow:0 8px 23px #65365a23;white-space:nowrap}
+.floating-toolbar.visible{display:flex}.floating-toolbar button{font-size:11px;font-weight:750;color:#7e5f87;background:#fff3fa;border-radius:9px;padding:7px 10px;min-height:30px}.floating-toolbar .danger-action{color:#c94675;background:#fff0f3}
+@media(min-width:861px){.sheet-head{order:1}.editor .panel.active{order:2}.editor .tabs{order:0}.canvas-wrap{padding:18px}.preview-panel{padding:17px 20px 15px}.brand h1{font-size:25px}.topbar{min-height:76px}.sticker-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:860px){
+ body{background:#faf7fc}
+ .topbar{min-height:58px;height:58px;padding:7px 11px 6px;background:#fffafee8;border-bottom:1px solid #f1e5f0;box-shadow:0 3px 10px #4a27430b}
+ .brand-icon{height:35px;width:35px;border-radius:12px;font-size:18px;border-width:2px}.brand{gap:8px}.brand h1{font-size:19px}.brand h1 small{font-size:13px}.brand p{font-size:9px;margin-top:2px}.header-actions{gap:5px}.header-upload{padding:8px 10px;font-size:11px;border-radius:10px}.header-mini{width:34px;height:34px;font-size:18px}.privacy-tag{display:none}
+ main{padding:0;height:auto}.workspace{display:flex;flex-direction:column;gap:0;min-height:0;height:100%}
+ .preview-panel{order:1;min-height:0;flex:1;width:100%;padding:8px 10px 9px;background:transparent;border:0;border-radius:0;box-shadow:none}
+ .preview-head{min-height:34px;margin:0 1px 7px;gap:4px}.preview-head h2{font-size:12px;margin:0 0 2px}.preview-head p{font-size:10px}.quick-buttons{gap:4px}.small-btn{font-size:17px;padding:4px;min-width:31px;height:30px}
+ .canvas-wrap{min-height:0;flex:1;border-radius:16px;padding:8px;}
+ .canvas-instruction{top:8px;font-size:9px;padding:4px 9px}
+ .empty-art{width:107px;height:126px;margin-bottom:14px;padding:10px;border-radius:12px}.empty-art .line{margin:7px auto;height:5px}.empty-art .stamp{font-size:23px;margin:4px auto}.empty-art .sticker{font-size:28px;right:-14px}.empty-state{padding:7px 10px}.empty-state h3{font-size:14px}.empty-state p{font-size:11px;line-height:1.45}
+ .action-bar{margin:8px 0 0;gap:7px}.action-bar button{min-height:38px;padding:8px 10px;font-size:11px;flex:1;max-width:none}.action-bar #download{flex:.55}.message{bottom:58px}
+ .editor{order:2;flex:none;min-height:0;height:calc(69px + env(safe-area-inset-bottom));width:100%;border:1px solid #eddfeb;border-bottom:0;border-radius:19px 19px 0 0;box-shadow:0 -9px 28px #51344c19;background:#fffdff;transition:height .22s cubic-bezier(.2,.7,.2,1)}
+ body.drawer-open .editor{height:min(43dvh,380px)}
+ .editor .tabs{order:3;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));flex:none;background:#fffafd;margin:0;padding:6px 4px max(6px,env(safe-area-inset-bottom));border:0;border-top:1px solid #f1e9f2;gap:1px;border-radius:0;min-height:calc(68px + env(safe-area-inset-bottom))}
+ .editor .tab{min-height:54px;font-size:10px;padding:5px 0 4px;border-radius:10px;gap:2px}.editor .tab .tab-icon{font-size:19px;line-height:22px}.editor .tab .tab-label{font-size:10px;letter-spacing:-.55px}
+ .editor .sheet-head{order:1;display:none;min-height:40px;padding:5px 14px;border-bottom:1px solid #f7eaf1}
+ body.drawer-open .editor .sheet-head{display:flex}.sheet-close{display:block;font-size:11px;padding:6px 11px}
+ .editor>.panel{order:2!important;display:none!important;flex:none;min-height:0;padding:8px 14px 13px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+ body.drawer-open .editor>.panel.active{display:block!important;flex:1;min-height:0}
+ .panel-title{font-size:13px}.hint{font-size:10px;margin:4px 0 9px}.emoji-grid{grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}.emoji{min-height:35px;font-size:21px;border-radius:9px}
+ .sticker-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.sticker-card{min-height:64px}.sticker-card .sticker-pick{min-height:63px}.sticker-card .sticker-pick img{width:53px;height:47px}.sticker-card .sticker-pick span{font-size:8px}
+ .mask-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.mask-actions button{padding:10px 5px;font-size:11px;border-radius:12px}.mask-actions button span{font-size:23px;margin:0 0 2px}
+ .field{margin:10px 0}.color-options{gap:3px}.selection-head strong{font-size:12px}.selection-actions button{font-size:11px}
+ .floating-toolbar{bottom:60px}.floating-toolbar button{font-size:10px;padding:7px 9px}
+}
+@media(max-width:360px){.editor .tab .tab-label{font-size:9px}.editor .tab .tab-icon{font-size:17px}.header-upload{font-size:10px}.brand h1{font-size:17px}.emoji-grid{grid-template-columns:repeat(7,minmax(0,1fr))}.sticker-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.preview-head p{font-size:9px}}
+@media(max-height:620px) and (max-width:860px){body.drawer-open .editor{height:min(50dvh,300px)}.preview-head p{display:none}.empty-art{display:none}}
+@media(prefers-reduced-motion:reduce){.editor,.message{transition:none!important}}
+
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="brand"><div class="brand-icon" aria-hidden="true">🍭</div><div><h1>Slip <span>Candy</span> <small>🎀</small></h1><p>แต่งสลิปให้น่ารัก ในสไตล์ของคุณ</p></div></div>
-  <div class="privacy-tag">🔐 รูปภาพประมวลผลบนเครื่องคุณ</div>
+  <div class="header-actions"><button class="header-mini" id="top-undo" title="ย้อนกลับ" aria-label="ย้อนกลับ">↶</button><button class="header-upload" id="top-upload">＋ เลือกรูป</button></div><div class="privacy-tag">🔐 ประมวลผลบนอุปกรณ์</div>
 </header>
 <main>
 <div class="workspace">
@@ -57,7 +125,7 @@ main{max-width:1280px;margin:0 auto;padding:8px 24px 50px}.workspace{display:gri
     <div class="upload-zone"><div class="upload-icon">🖼️</div><div class="upload-text"><strong>เลือกรูปสลิป</strong><small id="file-name">JPG, PNG, WEBP, HEIC*</small></div><button id="upload-btn" type="button">+ อัปโหลด</button></div>
     <input id="file-input" type="file" accept="image/*,.heic,.heif" hidden>
     <p class="steps">✨ 1. อัปโหลด → 2. ตกแต่ง → 3. บันทึก / แชร์</p>
-    <div class="tabs" role="tablist" aria-label="เครื่องมือ">
+    <div class="tabs" role="tablist" aria-label="เครื่องมือตกแต่ง">
       <button class="tab active" data-tab="emoji" role="tab" aria-selected="true">🥰 อิโมจิ</button>
       <button class="tab" data-tab="stickers" role="tab" aria-selected="false">🧸 สติกเกอร์</button>
       <button class="tab" data-tab="privacy" role="tab" aria-selected="false">🔒 ปิดข้อมูล</button>
@@ -65,6 +133,7 @@ main{max-width:1280px;margin:0 auto;padding:8px 24px 50px}.workspace{display:gri
       <button class="tab" data-tab="text" role="tab" aria-selected="false">✍️ Text Box</button>
       <button class="tab" data-tab="layouts" role="tab" aria-selected="false">📐 Layout</button>
     </div>
+    <div class="sheet-head" id="sheet-head"><div><strong id="sheet-title">🥰 อิโมจิน่ารัก</strong><small> · แตะเพื่อแปะบนภาพ</small></div><button class="sheet-close" id="close-sheet" aria-label="ปิดแผงเครื่องมือ">⌄ ปิด</button></div>
     <section class="panel active" data-panel="emoji" role="tabpanel">
       <h3 class="panel-title">เลือกสติกเกอร์สุดคิวต์ 💗</h3>
       <p class="hint">แตะอิโมจิเพื่อเพิ่ม จากนั้นลากไปวางตรงไหนก็ได้บนรูป</p>
@@ -174,6 +243,7 @@ main{max-width:1280px;margin:0 auto;padding:8px 24px 50px}.workspace{display:gri
   <section class="preview-panel" aria-label="พื้นที่แสดงและตกแต่งภาพ">
     <div class="preview-head"><div><h2>✨ ตัวอย่างภาพของคุณ</h2><p>ลากเพื่อย้าย • แตะเลือก • ดึงจุดมุมเพื่อขยาย/ย่อ</p></div><div class="quick-buttons"><button class="small-btn" id="undo" disabled title="ย้อนกลับ">↶ ย้อน</button><button class="small-btn" id="redo" disabled title="ทำซ้ำการแก้ไข">↷ คืน</button><button class="small-btn" id="reset-all" disabled title="ล้างการตกแต่ง">↺ ล้าง</button></div></div>
     <div class="canvas-wrap" id="canvas-wrap">
+      <div class="canvas-instruction" id="canvas-instruction">👆 ลากย้าย · ↘ ย่อขยาย · ↻ หมุน</div>
       <div class="empty-state" id="empty-state">
         <div class="empty-art" aria-hidden="true"><div class="line short"></div><div class="stamp">🍓</div><div class="line"></div><div class="line mid"></div><div class="line short"></div><div class="sticker">🎀</div></div>
         <h3>เริ่มด้วยรูปสลิปของคุณ 🩷</h3><p>เลือกรูปจากคลังภาพหรือกล้องมือถือ แล้วสนุกกับการตกแต่งได้เลย</p>
@@ -181,8 +251,9 @@ main{max-width:1280px;margin:0 auto;padding:8px 24px 50px}.workspace{display:gri
       </div>
       <div class="canvas-holder" id="canvas-holder"><canvas id="editor-canvas" aria-label="สลิปที่กำลังตกแต่ง สามารถลากสติกเกอร์หรือกรอบปิดข้อมูลเพื่อเปลี่ยนตำแหน่ง"></canvas></div>
     </div>
-    <div class="action-bar"><button class="btn-primary" id="share" disabled>📲 แชร์ / บันทึกลงรูปภาพ</button><button class="btn-secondary" id="download" disabled>💾 ดาวน์โหลด PNG</button></div>
-    <p class="stage-hint">📱 iPhone: กดแชร์ → “บันทึกรูปภาพ” หากมี • Android: แชร์ไปแอปรูปภาพหรือดาวน์โหลดไฟล์</p>
+    <div class="floating-toolbar" id="floating-toolbar"><button id="quick-adjust" type="button">⚙ ปรับแต่ง</button><button id="quick-duplicate" type="button">⧉ ทำซ้ำ</button><button id="quick-delete" class="danger-action" type="button">🗑 ลบ</button></div>
+    <div class="action-bar"><button class="btn-primary" id="share" disabled>📲 บันทึก / แชร์ไปยังรูปภาพ</button><button class="btn-secondary" id="download" disabled>⬇ PNG</button></div>
+    <p class="stage-hint">📱 บันทึก PNG หรือเปิดเมนูแชร์เพื่อเลือกบันทึกภาพบนมือถือ</p>
     <div class="message" id="message" role="status" aria-live="polite"></div>
   </section>
 </div>
@@ -276,7 +347,7 @@ $('restore-stickers').addEventListener('click',()=>$('restore-stickers-input').c
 $('restore-stickers-input').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;try{if(file.size>70*1024*1024)throw Error('ไฟล์สำรองใหญ่เกินไป');const doc=JSON.parse(await file.text());if(doc.type!=='SlipCandyStickerLibrary'||!Array.isArray(doc.stickers))throw Error('ไฟล์นี้ไม่ใช่คลังสติกเกอร์ Slip Candy');let n=0;for(const rec of doc.stickers){if(typeof rec.name!=='string'||!/^data:image\/(png|webp|jpeg);base64,/i.test(rec.data||''))continue;const id=customStickers.some(x=>x.id===rec.id)?freshStickerId():(/^mine-[a-z0-9-]+$/i.test(rec.id||'')?rec.id:freshStickerId());await saveSticker({id,name:rec.name.slice(0,35),category:'ของฉัน',data:rec.data});n++}toast('นำเข้าสำเร็จ '+n+' รูป 💖')}catch(err){toast('นำเข้าไม่สำเร็จ: '+err.message,true)}});
 
 function newItem(type,p={}){return {id:nextId++,type,x:p.x??baseW/2,y:p.y??baseH/2,rotation:p.rotation??0,opacity:1,...p}}
-function addItem(it){items.push(it);selectedId=it.id;stopDrawMode();commit();updateSelectionUI();requestRender();toast('เพิ่มแล้ว! ลากไปตำแหน่งที่ต้องการได้เลย ✨');if(matchMedia('(max-width:720px)').matches)requestAnimationFrame(()=>$('canvas-wrap').scrollIntoView({behavior:'smooth',block:'start'}))}
+function addItem(it){items.push(it);selectedId=it.id;stopDrawMode();commit();updateSelectionUI();requestRender();toast('เพิ่มแล้ว! ลากไปตำแหน่งที่ต้องการได้เลย ✨');}
 function addEmoji(emoji){if(!requireImage())return;const text=emoji.trim();if(!text)return;addItem(newItem('emoji',{text,size:Math.round(baseW*.115),x:baseW*.5,y:baseH*.43}))}
 $('add-custom-emoji').addEventListener('click',()=>{const v=$('custom-emoji').value.trim();if(v)addEmoji(v);else toast('พิมพ์อิโมจิที่ต้องการก่อนนะคะ',true)});
 $('custom-emoji').addEventListener('keydown',e=>{if(e.key==='Enter')$('add-custom-emoji').click()});
@@ -326,14 +397,15 @@ function drawTextBox(c,it){
  c.restore();
 }
 function viewUnits(px){const rect=canvas.getBoundingClientRect();return px*(baseW/Math.max(rect.width,1))}
-function selectionDraw(c,it){const {w,h}=getItemBounds(it,c),angle=(it.rotation||0)*Math.PI/180;c.save();c.translate(it.x,it.y);c.rotate(angle);c.strokeStyle='#ef4795';c.lineWidth=viewUnits(2);c.setLineDash([viewUnits(6),viewUnits(4)]);c.strokeRect(-w/2,-h/2,w,h);c.setLineDash([]);const r=viewUnits(10);c.beginPath();c.arc(w/2,h/2,r,0,Math.PI*2);c.fillStyle='#fff';c.fill();c.lineWidth=viewUnits(2.5);c.stroke();c.fillStyle='#df4888';c.font=`bold ${viewUnits(12)}px sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText('↘',w/2,h/2);c.restore()}
+function selectionDraw(c,it){const {w,h}=getItemBounds(it,c),angle=(it.rotation||0)*Math.PI/180;c.save();c.translate(it.x,it.y);c.rotate(angle);c.strokeStyle='#ef4795';c.lineWidth=viewUnits(2);c.setLineDash([viewUnits(6),viewUnits(4)]);c.strokeRect(-w/2,-h/2,w,h);c.setLineDash([]);const r=viewUnits(10);c.beginPath();c.arc(w/2,h/2,r,0,Math.PI*2);c.fillStyle='#fff';c.fill();c.lineWidth=viewUnits(2.5);c.stroke();c.fillStyle='#df4888';c.font=`bold ${viewUnits(12)}px sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText('↘',w/2,h/2);const ry=-h/2-viewUnits(25);c.beginPath();c.moveTo(w/2,-h/2);c.lineTo(w/2,ry+viewUnits(10));c.strokeStyle='#e9539a';c.lineWidth=viewUnits(2);c.stroke();c.beginPath();c.arc(w/2,ry,r,0,Math.PI*2);c.fillStyle='#fff';c.fill();c.stroke();c.fillStyle='#d74685';c.font=`bold ${viewUnits(13)}px sans-serif`;c.fillText('↻',w/2,ry);c.restore()}
 function render(c,editing){if(!image)return;c.save();c.clearRect(0,0,baseW,baseH);c.fillStyle='#fff';c.fillRect(0,0,baseW,baseH);c.filter=`hue-rotate(${filters.hue}deg) saturate(${filters.sat}%) brightness(${filters.bright}%) contrast(${filters.contrast}%)`;c.drawImage(image,0,0,baseW,baseH);c.filter='none';if(filters.strength>0){c.save();c.globalCompositeOperation='multiply';c.globalAlpha=filters.strength/100;c.fillStyle=filters.tint;c.fillRect(0,0,baseW,baseH);c.restore()}items.forEach(it=>drawItem(c,it));if(editing){if(drag?.mode==='draw'&&drag.rect){const a=drag.rect;c.save();c.fillStyle=$('mask-color').value;c.fillRect(a.x,a.y,a.w,a.h);c.restore()}const it=itemById(selectedId);if(it)selectionDraw(c,it)}c.restore()}
 function localPoint(it,p){const ang=(it.rotation||0)*Math.PI/180,dx=p.x-it.x,dy=p.y-it.y;return {x:dx*Math.cos(ang)+dy*Math.sin(ang),y:-dx*Math.sin(ang)+dy*Math.cos(ang)}}
 function hitTest(it,p){const local=localPoint(it,p),b=getItemBounds(it);return Math.abs(local.x)<=b.w/2+viewUnits(5)&&Math.abs(local.y)<=b.h/2+viewUnits(5)}
 function onHandle(it,p){const local=localPoint(it,p),b=getItemBounds(it);return Math.hypot(local.x-b.w/2,local.y-b.h/2)<viewUnits(27)}
+function onRotateHandle(it,p){const local=localPoint(it,p),b=getItemBounds(it);return Math.hypot(local.x-b.w/2,local.y+b.h/2+viewUnits(25))<viewUnits(21)}
 function getPos(e){const rect=canvas.getBoundingClientRect();return {x:clamp((e.clientX-rect.left)*baseW/rect.width,0,baseW),y:clamp((e.clientY-rect.top)*baseH/rect.height,0,baseH)}}
-canvas.addEventListener('pointerdown',e=>{if(!image)return;e.preventDefault();const p=getPos(e);if(drawMode){drag={mode:'draw',start:p,rect:{x:p.x,y:p.y,w:0,h:0}};canvas.setPointerCapture(e.pointerId);return}let sel=itemById(selectedId);if(sel&&onHandle(sel,p)){drag={mode:'resize',id:sel.id,start:p,old:structuredClone(sel),changed:false};canvas.setPointerCapture(e.pointerId);return}let hit=null;for(let i=items.length-1;i>=0;i--){if(hitTest(items[i],p)){hit=items[i];break}}selectedId=hit?hit.id:null;updateSelectionUI();requestRender();if(hit){drag={mode:'move',id:hit.id,start:p,old:structuredClone(hit),changed:false};canvas.setPointerCapture(e.pointerId)}});
-canvas.addEventListener('pointermove',e=>{if(!drag)return;e.preventDefault();const p=getPos(e);if(drag.mode==='draw'){const a=drag.start;drag.rect={x:Math.min(a.x,p.x),y:Math.min(a.y,p.y),w:Math.abs(a.x-p.x),h:Math.abs(a.y-p.y)};requestRender();return}const it=itemById(drag.id);if(!it)return;const old=drag.old;const dx=p.x-drag.start.x,dy=p.y-drag.start.y;if(Math.hypot(dx,dy)>1)drag.changed=true;if(drag.mode==='move'){const bounds=getItemBounds(it);it.x=clamp(old.x+dx,Math.min(bounds.w/2,baseW/2),Math.max(baseW-bounds.w/2,baseW/2));it.y=clamp(old.y+dy,Math.min(bounds.h/2,baseH/2),Math.max(baseH-bounds.h/2,baseH/2))}else if(drag.mode==='resize'){if(it.type==='mask'){const left=old.x-old.w/2,top=old.y-old.h/2;const right=clamp(p.x,left+baseW*.045,baseW),bottom=clamp(p.y,top+baseW*.045,baseH);it.w=right-left;it.h=bottom-top;it.x=left+it.w/2;it.y=top+it.h/2}
+canvas.addEventListener('pointerdown',e=>{if(!image)return;e.preventDefault();const p=getPos(e);if(drawMode){drag={mode:'draw',start:p,rect:{x:p.x,y:p.y,w:0,h:0}};canvas.setPointerCapture(e.pointerId);return}let sel=itemById(selectedId);if(sel&&onRotateHandle(sel,p)){drag={mode:'rotate',id:sel.id,start:p,old:structuredClone(sel),changed:false};canvas.setPointerCapture(e.pointerId);return}if(sel&&onHandle(sel,p)){drag={mode:'resize',id:sel.id,start:p,old:structuredClone(sel),changed:false};canvas.setPointerCapture(e.pointerId);return}let hit=null;for(let i=items.length-1;i>=0;i--){if(hitTest(items[i],p)){hit=items[i];break}}selectedId=hit?hit.id:null;updateSelectionUI();requestRender();if(hit){drag={mode:'move',id:hit.id,start:p,old:structuredClone(hit),changed:false};canvas.setPointerCapture(e.pointerId)}});
+canvas.addEventListener('pointermove',e=>{if(!drag)return;e.preventDefault();const p=getPos(e);if(drag.mode==='draw'){const a=drag.start;drag.rect={x:Math.min(a.x,p.x),y:Math.min(a.y,p.y),w:Math.abs(a.x-p.x),h:Math.abs(a.y-p.y)};requestRender();return}const it=itemById(drag.id);if(!it)return;const old=drag.old;const dx=p.x-drag.start.x,dy=p.y-drag.start.y;if(Math.hypot(dx,dy)>1)drag.changed=true;if(drag.mode==='rotate'){const theta0=Math.atan2(drag.start.y-old.y,drag.start.x-old.x),theta1=Math.atan2(p.y-old.y,p.x-old.x);it.rotation=Math.round((((old.rotation||0)+(theta1-theta0)*180/Math.PI+540)%360)-180)}else if(drag.mode==='move'){const bounds=getItemBounds(it);it.x=clamp(old.x+dx,Math.min(bounds.w/2,baseW/2),Math.max(baseW-bounds.w/2,baseW/2));it.y=clamp(old.y+dy,Math.min(bounds.h/2,baseH/2),Math.max(baseH-bounds.h/2,baseH/2))}else if(drag.mode==='resize'){if(it.type==='mask'){const left=old.x-old.w/2,top=old.y-old.h/2;const right=clamp(p.x,left+baseW*.045,baseW),bottom=clamp(p.y,top+baseW*.045,baseH);it.w=right-left;it.h=bottom-top;it.x=left+it.w/2;it.y=top+it.h/2}
 else if(it.type==='textbox'){
  const a=(old.rotation||0)*Math.PI/180,cs=Math.cos(a),sn=Math.sin(a),ox=old.x-old.w/2*cs+old.h/2*sn,oy=old.y-old.w/2*sn-old.h/2*cs;
  const u=(p.x-ox)*cs+(p.y-oy)*sn,v=-(p.x-ox)*sn+(p.y-oy)*cs;
@@ -463,7 +535,7 @@ function applyLayoutSlot(slot){const rec=layoutSlots[slot];if(!rec)return;if(!re
  items=rec.items.filter(it=>it.type!=='sticker'||getStickerImage(it.stickerId)).map(denormItem);
  filters={...defaultFilters(),...(rec.filters||{})};selectedId=null;stopDrawMode();updateColorUI();updateSelectionUI();commit();requestRender();
  toast('เรียกใช้ '+rec.name+' แล้ว! ตรวจตำแหน่งปิดข้อมูลก่อนแชร์ 🔒'+(missing.length?' • สติกเกอร์หาย '+missing.length+' รูป':''),!!missing.length);
- if(matchMedia('(max-width:720px)').matches)requestAnimationFrame(()=>$('canvas-wrap').scrollIntoView({behavior:'smooth',block:'start'}));
+ ;
 }
 async function deleteLayoutSlot(slot){if(!layoutSlots[slot])return;if(!confirm('ลบ '+layoutSlots[slot].name+' ออกจากช่อง '+(slot+1)+'?'))return;try{await persistLayoutSlot(slot,null);toast('ลบ Layout ช่อง '+(slot+1)+' แล้ว')}catch(err){toast('ลบไม่สำเร็จ: '+err.message,true)}}
 $('export-layouts').addEventListener('click',()=>{const saved=layoutSlots.filter(Boolean);if(!saved.length)return toast('ยังไม่มี Layout ให้สำรอง',true);
@@ -479,6 +551,55 @@ $('import-layouts-file').addEventListener('change',async e=>{const file=e.target
  }catch(err){toast('นำเข้า Layout ไม่สำเร็จ: '+err.message,true)}});
 
 setupEmoji();buildPresets();updateColorUI();updateHistoryButtons();renderStickerLibrary();renderLayoutSlots();initStickerStorage().then(initLayoutStorage);
+})();
+</script>
+
+<script>
+/* V4 responsive controls: live preview never scrolls away; tools stay in a bottom sheet. */
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const body=document.body,canvas=$('editor-canvas'),holder=$('canvas-holder'),stage=$('canvas-wrap'),selection=$('selection');
+const editor=document.querySelector('.editor');
+const titles={emoji:'🥰 เลือกอิโมจิ',stickers:'🧸 คลังสติกเกอร์',privacy:'🔒 ปิดข้อมูลส่วนตัว',color:'🎨 ปรับสีภาพ',text:'✍️ ใส่ Text Box',layouts:'📐 Layout ของฉัน',adjust:'⚙ ปรับแต่งวัตถุ'};
+const tabInfo={emoji:['🥰','อิโมจิ'],stickers:['🧸','สติกเกอร์'],privacy:['🔒','ปิดข้อมูล'],color:['🎨','โทนสี'],text:['✍️','ข้อความ'],layouts:['▦','Layout'],adjust:['⚙️','ปรับแต่ง']};
+let adj=editor.querySelector('.panel[data-panel="adjust"]');if(!adj){adj=document.createElement('section');adj.className='panel';adj.dataset.panel='adjust';adj.setAttribute('role','tabpanel');adj.innerHTML='<h3 class="panel-title">⚙ ปรับแต่งที่เลือก</h3><div id="adjust-placeholder" class="adjust-empty">แตะสติกเกอร์หรือข้อความบนภาพก่อน แล้วปรับขนาด หมุน สี และตำแหน่งได้ตรงนี้ 💗</div>';editor.insertBefore(adj,selection)}
+if(selection.parentElement!==adj)adj.append(selection);
+const tabBar=editor.querySelector('.tabs');if(!tabBar.querySelector('.tab[data-tab="adjust"]')){const adjTab=document.createElement('button');adjTab.className='tab';adjTab.type='button';adjTab.dataset.tab='adjust';adjTab.setAttribute('role','tab');adjTab.setAttribute('aria-selected','false');tabBar.append(adjTab)};
+for(const tab of tabBar.querySelectorAll('.tab')){const [ico,label]=tabInfo[tab.dataset.tab]||['✨',tab.textContent];tab.innerHTML='<span class="tab-icon">'+ico+'</span><span class="tab-label">'+label+'</span>';tab.title=label}
+for(const [id,label] of [['undo','ย้อนกลับ'],['redo','ทำซ้ำ'],['reset-all','ล้างการตกแต่ง']]){const b=$(id);if(b){b.textContent=id==='undo'?'↶':id==='redo'?'↷':'⟲';b.setAttribute('aria-label',label);b.title=label}}
+let current='emoji',messageTimer=null;
+const mobile=()=>matchMedia('(max-width:860px)').matches;
+function setTool(key,open){current=key;body.dataset.tool=key;document.querySelectorAll('.tab').forEach(t=>{const is=t.dataset.tab===key;t.classList.toggle('active',is);t.setAttribute('aria-selected',is?'true':'false')});
+ document.querySelectorAll('.editor>.panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===key));$('sheet-title').textContent=titles[key]||'🎀 เครื่องมือ';
+ if(mobile())body.classList.toggle('drawer-open',open);else body.classList.add('drawer-open');
+ if(key==='adjust'){$('adjust-placeholder').style.display=selection.classList.contains('show')?'none':'block'}
+ requestAnimationFrame(fitCanvas)
+}
+for(const tab of tabBar.querySelectorAll('.tab')){tab.addEventListener('click',()=>{const key=tab.dataset.tab;const shouldOpen=!body.classList.contains('drawer-open')||current!==key;setTool(key,shouldOpen)})}
+$('close-sheet').addEventListener('click',()=>setTool(current,false));
+$('top-upload').addEventListener('click',()=>$('file-input').click());$('top-undo').addEventListener('click',()=>$('undo').click());
+$('quick-adjust').addEventListener('click',()=>setTool('adjust',true));
+$('quick-duplicate').addEventListener('click',()=>$('duplicate-item').click());
+$('quick-delete').addEventListener('click',()=>$('delete-item').click());
+function updateFloating(){const sel=selection.classList.contains('show');$('floating-toolbar').classList.toggle('visible',sel);$('adjust-placeholder').style.display=sel?'none':'block'}
+new MutationObserver(updateFloating).observe(selection,{attributes:true,attributeFilter:['class']});updateFloating();
+// Keep all content visible: resize the canvas to fit the currently available stage area.
+let scheduled=0;function fitCanvas(){if(!holder.classList.contains('show')||!canvas.width||!canvas.height)return;const stageRect=stage.getBoundingClientRect();if(stageRect.width<20||stageRect.height<20)return;const maxW=Math.max(20,stageRect.width-(mobile()?18:42));const maxH=Math.max(20,stageRect.height-(mobile()?20:42));const fw=Math.max(20,Math.floor(Math.min(maxW,maxH*canvas.width/canvas.height)));holder.style.width=fw+'px'}
+function scheduleFit(){if(scheduled)return;scheduled=requestAnimationFrame(()=>{scheduled=0;fitCanvas()})}
+new ResizeObserver(scheduleFit).observe(stage);let firstImage=false;new MutationObserver(()=>{scheduleFit();if(holder.classList.contains('show')&&!firstImage){firstImage=true;if(mobile())setTool('stickers',true)}}).observe(holder,{attributes:true,attributeFilter:['class']});
+window.addEventListener('resize',scheduleFit);window.addEventListener('orientationchange',scheduleFit);
+if(window.visualViewport)window.visualViewport.addEventListener('resize',scheduleFit);
+// Close the palette when an element has been placed, so the photo grows again.
+const finishTargets=['.emoji','.sticker-pick','#add-custom-emoji','#add-name-mask','#add-qr-mask','#add-other-mask','#add-textbox','#add-text'];
+document.addEventListener('click',e=>{if(!mobile())return;if(finishTargets.some(s=>e.target.closest(s)))setTimeout(()=>setTool(current,false),40);
+ if(e.target.closest('.layout-actions button.btn-secondary'))setTimeout(()=>setTool(current,false),40);
+});
+// Selecting the canvas leaves the stage visible; use floating edit button for advanced settings.
+const msg=$('message');new MutationObserver(()=>{msg.classList.remove('show-message');if(messageTimer)clearTimeout(messageTimer);if(msg.textContent.trim()){requestAnimationFrame(()=>msg.classList.add('show-message'));messageTimer=setTimeout(()=>msg.classList.remove('show-message'),2900)}}).observe(msg,{childList:true,characterData:true,subtree:true});
+// Gesture: drag the little sheet header down to dismiss it, or up to open it.
+let y0=null;const head=$('sheet-head');head.addEventListener('touchstart',e=>{if(e.touches.length===1)y0=e.touches[0].clientY},{passive:true});head.addEventListener('touchend',e=>{if(y0===null)return;const d=e.changedTouches[0].clientY-y0;y0=null;if(d>42)setTool(current,false)},{passive:true});
+// Imported portable HTML may preserve old active panels; normalize on load.
+setTool('emoji',false);scheduleFit();
 })();
 </script>
 </body>
